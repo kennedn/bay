@@ -1,4 +1,9 @@
 #!/bin/bash
+cleanup() {
+  [ -f "${req}" ] && rm "${req}"
+}
+trap cleanup EXIT
+
 SCRIPT_NAME=$(basename $0)
 
 top_keys() {
@@ -120,17 +125,20 @@ while [ "$#" -gt 0 ]; do
 done
 set -- "${POSITIONAL[@]}"
 
+url=
 if [ -z "${JSON_NUMBER}" ]; then
   terms=${@}
-  req=$(curl -sX GET https://apibay.org/q.php?q=${terms// /%20})
+  url="https://apibay.org/q.php?q=${terms// /%20}"
 else
   [ "$#" -gt 0 ] && help
-  req=$(curl -sX GET ${PRECOMPILED_URL//#/${JSON_NUMBER}})
+  url="${PRECOMPILED_URL//#/${JSON_NUMBER}}"
 fi
 
+req=$(mktemp)
+status=$(curl -sX GET -w "%{http_code}" -o "${req}" "${url}")
+[ "${status}" -ne 200 ] && echo "Error: ${status}" && exit 1
 
- jq -r 'reverse | .[] | "\(.name)\n\tseeders: \(.seeders)\n\tsize: \(.size | tonumber /1024/1024 | floor) MB\n\tlink: magnet:?xt=urn:btih:\(.info_hash)"' <<<"${req}"
-
+jq -r 'reverse | .[] | "\(.name)\n\tseeders: \(.seeders)\n\tsize: \(.size | tonumber /1024/1024 | floor) MB\n\tlink: magnet:?xt=urn:btih:\(.info_hash)"' <"${req}"
 
 
 
