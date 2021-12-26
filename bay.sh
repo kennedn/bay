@@ -69,7 +69,7 @@ help() {
 cat << EOF
 usage: $SCRIPT_NAME [-t|-m|-c|-l|-h] [TERM]...
 Query apibay for magnet links
-Example: $SCRIPT_NAME the sopranos
+Example: $SCRIPT_NAME ISO Debian 9
 
 Options:
   -t,--tv
