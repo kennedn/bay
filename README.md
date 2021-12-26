@@ -1,5 +1,5 @@
 # bay
-A bare bones CLI frontend for finding magnet links in the command line using apibay.org, thepiratebay's internal JSON api.
+A bare bones CLI frontend for finding magnet links on the command line using apibay.org, thepiratebay's internal JSON api.
 
 
 ### Prerequisites
