@@ -15,7 +15,7 @@ sudo apt install jq
 You can then run the script by doing the following:
 ```bash
 chmod 744 bay.sh
-./bay
+./bay.sh
 ```
 
 ## Usage
