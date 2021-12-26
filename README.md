@@ -22,7 +22,7 @@ chmod 744 bay.sh
 ```bash
 usage: bay.sh [-t|-m|-c|-l|-h] [TERM]...
 Query apibay for magnet links
-Example: bay.sh the sopranos
+Example: bay.sh ISO Debian 9
 
 Options:
   -t,--tv
