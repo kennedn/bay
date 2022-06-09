@@ -135,7 +135,7 @@ else
 fi
 
 req=$(mktemp)
-status=$(curl -sX GET -w "%{http_code}" -o "${req}" "${url}")
+status=$(curl --connect-timeout 3 -sX GET -w "%{http_code}" -o "${req}" "${url}")
 [ "${status}" -ne 200 ] && echo "Error: ${status}" && exit 1
 
 jq -r 'reverse | .[] | "\(.name)\n\tseeders: \(.seeders)\n\tsize: \(.size | tonumber /1024/1024 | floor) MB\n\tlink: magnet:?xt=urn:btih:\(.info_hash)"' <"${req}"
